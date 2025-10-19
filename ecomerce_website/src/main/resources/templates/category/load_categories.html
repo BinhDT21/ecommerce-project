@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments/header::header}"></div>
+
+<body>
+
+<div th:replace="~{fragments/navbar::navbar}"></div>
+
+<div class="container ">
+    <div class="d-flex mt-4 justify-content-between">
+        <h2>Category</h2>
+        <a class="btn btn-primary" href="/ecomerce/category/add" role="button">Add Category</a>
+    </div>
+
+
+    <div class="my-3 d-flex justify-content-between">
+        <input type="text" class="form-control form-control-lg" id="searchFormInput" placeholder="Search...">
+        <button th:onclick="findBySearch()" class="mx-2 btn btn-primary">Find</button>
+    </div>
+
+    <table class="table table-sm">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>#</th>
+        </tr>
+
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}"/>
+            <td th:text="${category.name}"/>
+            <td th:text="${category.description}"/>
+            <td>
+                <a th:href="@{/category/edit/{category_id}(category_id=${category.id})}" role="button"
+                   class="btn btn-outline-dark">Edit</a>
+
+                <a th:data-id="${category.id}"
+                   data-bs-toggle="modal" data-bs-target="#confirmationModal"
+                   th:href="@{#}" role="button"
+                   class="btn btn-outline-dark">Delete</a>
+            </td>
+        </tr>
+
+    </table>
+
+    <div th:if="${totalPages != 0}" class="sticky-bottom">
+        <nav aria-label="Page navigation example">
+
+            <ul class="pagination justify-content-end">
+
+                <li class="page-item">
+                    <a class="page-link text-secondary btn"
+                       tabindex="-1"
+                       aria-disabled="true"
+                       th:classappend="${currentPage == 0} ? 'disabled' : '' "
+                       th:onclick="|changePage(${currentPage-1})|">Previous</a>
+                </li>
+
+                <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
+                    class="page-item mx-1" th:classappend="${currentPage == pageNum} ? 'disabled' : '' ">
+                    <a class="page-link text-secondary btn" th:onclick="|changePage(${pageNum})|"
+                       th:text="${pageNum + 1}"></a>
+                </li>
+
+                <li th:classappend="${currentPage + 1 == totalPages} ? 'disabled' : '' " class="page-item">
+                    <a class="page-link text-secondary btn" th:onclick="|changePage(${currentPage + 1})|">Next</a>
+                </li>
+            </ul>
+
+
+        </nav>
+    </div>
+
+</div>
+
+
+<!--The modal-->
+<div id="confirmationModal" data-bs-backdrop="static" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete confirmation !</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex justify-content-around">
+                <button id="btnConfirmDelete" type="button" class="btn btn-outline-dark">Confirm</button>
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End modal-->
+
+
+<script>
+
+    let categoryId = null;
+    const confirmationModal = document.getElementById("confirmationModal");
+    const btnConfirmDelete = document.getElementById("btnConfirmDelete");
+
+    confirmationModal.addEventListener("show.bs.modal", function(event){
+        const btnDelete = event.relatedTarget;
+
+        categoryId = btnDelete.getAttribute('data-id');
+
+        btnConfirmDelete.addEventListener("click", () => {
+            fetch(`http://localhost:1311/ecomerce/api/category/delete/${categoryId}`, {
+            method: 'DELETE'
+            }).then(response => {
+                console.log("Cate " + categoryId + " deleted");
+                window.location.reload();
+            });
+        });
+    })
+
+
+    function changePage (pageNum){
+        let currentUrl = new URL (window.location.href);
+        currentUrl.searchParams.set("page", pageNum);
+
+        window.location.href = currentUrl.href;
+    }
+
+
+    const searchFormInput = document.getElementById('searchFormInput');
+    function findBySearch (){
+        let searchContent = searchFormInput.value;
+        let currentUrl = new URL (window.location.href);
+        currentUrl.searchParams.set("name", searchContent);
+
+        window.location.href = currentUrl.href;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/header::header}"></div>
+<body>
+<div th:replace="~{fragments/navbar::navbar}"></div>
+<div class="container">
+  <div class="d-flex mt-4 justify-content-between">
+    <h2>Supplier</h2>
+    <button class="btn btn-primary ">Add Supplier</button>
+  </div>
+  <div class="my-3">
+    <input type="text" class="form-control form-control-lg" id="inputSearch" placeholder="Search...">
+  </div>
+</div>
+</body>
+</html>

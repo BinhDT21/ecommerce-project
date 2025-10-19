@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<nav th:fragment="navbar" class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div  class="container-fluid">
+        <div  class="collapse navbar-collapse " id="mynavbar">
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/product/load}">Products</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/category/load}">Categories</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/supplier/load}">Suppliers</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/order/load}">Orders</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/customer/load}">Customers</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/review/load}">Reviews</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/payment/load}">Payments</a>
+                </li>
+            </ul>
+            <form class="d-flex ">
+                <button class="btn btn-sm btn-outline-danger mx-1" type="submit">Login</button>
+                <button class="btn btn-sm btn-outline-secondary mx-1" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+
+</html>
