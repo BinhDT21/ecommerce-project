@@ -29,4 +29,8 @@ public class ProductVariant {
     @OneToMany(mappedBy = "productVariant")
     @JsonIgnore
     private List<Cart> carts;
+
+    @OneToMany(mappedBy = "productVariant")
+    @JsonIgnore
+    private List<ProductPhotos> photos;
 }
