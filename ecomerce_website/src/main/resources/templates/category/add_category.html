@@ -8,8 +8,9 @@
         <h2>Add Category</h2>
     </div>
 
-
     <form method="post" th:action="@{/category/save}" th:object="${category}">
+
+        <input type="hidden" th:field="*{id}">
         <table class=" table table-sm table-borderless">
             <tr>
                 <th class="text-center">Name</th>
@@ -20,16 +21,17 @@
                             type="text" class="form-control form-control-sm " placeholder="Category name..."
                             th:field="*{name}">
 
-                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">
-
-                    </div>
+                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                 </td>
             </tr>
             <tr>
                 <th class="text-center">Description</th>
                 <td>
-                    <input type="text" class="form-control form-control-sm" placeholder="Description..."
+                    <input th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : '' "
+                           type="text" class="form-control form-control-sm" placeholder="Description..."
                            th:field="*{description}">
+
+                    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback"></div>
                 </td>
             </tr>
 
@@ -42,6 +44,12 @@
 
 
 </div>
+
+<script th:inline="javascript">
+    let category = [[${category}]];
+<!--    thymeleaf cho phép chèn dữ liệu từ model vào JS qua kí pháp này và trả về kiểu JSON của đối tượng-->
+    console.log(category);
+</script>
 
 </body>
 </html>

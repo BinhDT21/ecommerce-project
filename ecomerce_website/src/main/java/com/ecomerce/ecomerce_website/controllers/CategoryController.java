@@ -66,6 +66,11 @@ public class CategoryController {
         }
     }
 
+    //API for update
+//    public String updateCategory (@ModelAttribute @Valid Category category, BindingResult bindingResult){
+//
+//    }
+
 
 
 

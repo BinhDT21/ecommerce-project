@@ -23,6 +23,7 @@ public class Category {
     @NotBlank(message = "{errors.category.notBlank}")
     @Size(min = 0, max = 255, message = "{errors.category.invalidSize}")
     private String name;
+    @NotBlank(message = "{errors.category.notBlank}")
     private String description;
     @OneToMany(mappedBy = "category")
     @JsonIgnore
